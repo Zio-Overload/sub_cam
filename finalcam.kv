@@ -1,0 +1,573 @@
+#:import Factory kivy.factory.Factory
+
+<end_process>
+    auto_dismiss : False
+    title : 'Notificación'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Proceso concluido!'
+            pos: 165, 230
+            font_size: 16
+        Button:
+            size_hint: None,None
+            size:160,40
+            pos : 320,210            
+            text: 'OK'
+            font_size: 15            
+            on_release:root.dismiss()
+            
+<confirm_reboot>
+    auto_dismiss : False
+    title : 'Confirmar'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Desea reiniciar el sitema?'
+            pos: 165, 230
+            font_size: 16       
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos:200,210            
+            text: 'Aceptar'
+            font_size: 15
+            bold: True
+            on_press: app.setBehavior.rebootDevice()
+            
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos : 480,210            
+            text: 'Salir'
+            font_size: 15            
+            on_release: root.dismiss()
+            
+<confirm_shutdown>
+    auto_dismiss : False
+    title : 'Confirmar'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Desea apagar el sitema?'
+            pos: 165, 230
+            font_size: 16       
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos:200,210            
+            text: 'Aceptar'
+            font_size: 15
+            bold: True
+            on_press: app.setBehavior.shutdownDevice()
+            
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos : 480,210            
+            text: 'Salir'
+            font_size: 15            
+            on_release: root.dismiss()
+    
+    
+<transPopup@Popup>
+    auto_dismiss : False
+    title : 'Confirmar'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Desea eliminar los archivos de memoria?'
+            pos: 165, 230
+            font_size: 16       
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos:200,210            
+            text: 'Aceptar'
+            font_size: 15
+            bold: True
+            on_press: app.setBehavior().clearFiles(), root.dismiss()
+            
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos : 480,210            
+            text: 'Salir'
+            font_size: 15            
+            on_release: root.dismiss()
+
+<alert_popup>
+    auto_dismiss : False
+    title : 'Error al configurar Programa!'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Se ingresaron valores incorrectos al programa!'
+            pos: 165, 230
+            font_size: 16
+        Button:
+            size_hint: None,None
+            size:160,40
+            pos : 320,210            
+            text: 'Regresar'
+            font_size: 15            
+            on_release:root.dismiss()
+
+<MySecondPopup@Popup>
+    auto_dismiss : False
+    title : 'Ejecutando...'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'El equipo se reiniciará al concluir programa'
+            pos: 165, 230
+            font_size: 16
+        Button:
+            size_hint: None,None
+            size:160,40
+            pos : 320,210            
+            text: 'Abortar Programa'
+            font_size: 15            
+            on_release: app.setBehavior.stopProgramClock()
+
+<my_popup>
+    auto_dismiss : False
+    title : 'Confirmar'
+    size_hint : 0.6,0.4
+    pos_hint : {"x":0.2, "y":0.4}
+    FloatLayout:       
+        Label:
+            text: 'Desea confirmar Inicio de Programa?'
+            pos: 165, 230
+            font_size: 16       
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos:200,210            
+            text: 'Aceptar'
+            font_size: 15
+            bold: True
+            on_press: app.setBehavior.initProgramClock(), Factory.MySecondPopup().open()
+            
+        Button:
+            size_hint: None,None
+            size:110,40
+            pos : 480,210            
+            text: 'Salir'
+            font_size: 15            
+            on_release: root.dismiss()
+        
+
+<program_layout>:
+   
+    slide_text: slider_intCaptur
+    slide_text2: slider_fotInterv
+    slide_text3: slider_program
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+    
+        Accordion:
+            orientation: 'vertical'
+            
+            AccordionItem:
+                title: 'Resumen y Confirmación'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size: root.width, root.height
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size: root.width, root.height
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size: root.width, root.height
+                            Label:
+                                text: 'Duración Total de Programa (Minutos)'
+                                font_size: 15                                
+                                color: 0,0,0,1
+                            Label:
+                                text: ''
+                                font_size: 20
+                                id : totalProgram
+                                color: 0,0,0,1
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size: root.width, root.height                      
+                            Label:
+                                text: 'Tiempo entre Intervalos de Captura (Minutos)'
+                                font_size: 15                                
+                                color: 0,0,0,1
+                            Label:
+                                text: ''
+                                font_size: 20
+                                id: totalInter
+                                color: 0,0,0,1
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size: root.width, root.height                         
+                            Label:
+                                text: 'Cantidad de Fotos por Intervalo (Unidades)'
+                                font_size: 15                               
+                                color: 0,0,0,1
+                            Label:
+                                text: ''
+                                font_size: 20  
+                                id: totalPicInter
+                                color: 0,0,0,1                                
+                                
+                    FloatLayout:                        
+                        Button:
+                            size_hint : None, None
+                            size : 140, 50
+                            pos: 560 , 300
+                            text : 'Iniciar Programa'
+                            bold : True
+                            on_press:root.initValues(),app.setBehavior.checkValues()
+                        Button:
+                            size_hint : None, None
+                            size : 75,40
+                            pos : 594, 185
+                            text : 'Salir'
+                            on_press: root.changeMain(), root.clear_saved()                            
+                            
+            AccordionItem:
+                title: 'Fotos por Internvalo'
+                BoxLayout:
+                    orientation : 'vertical'
+                    size: root.width, root.height
+                    Label:
+                        text: 'Indica la cantidad de fotos a tomar por Intervalo'
+                        font_size: 20
+                        color: 0,0,0,1
+                    BoxLayout:
+                        orientation : 'horizontal'
+                        size: root.width , root.height
+                        Slider:
+                            min: 0
+                            max: 2
+                            step: 1
+                            orientation: "horizontal"
+                            value_track : True
+                            value_track_color : 1,0,0,1
+                            on_value: root.slide_fotInterv(*args)
+                            id: slider_3
+                        Label:
+                            text: 'Valor'
+                            id: slider_fotInterv
+                            font_size : 25
+                            color : 0,0,0,1
+               
+                    FloatLayout:                        
+                        Button:
+                            size_hint : None, None
+                            size : 85, 40
+                            pos: 170 , 120
+                            text : 'Grabar'
+                            bold : True
+                            on_press: root.save_picInterv()
+                        Button:
+                            size_hint : None, None
+                            size : 85,40
+                            pos : 560, 120
+                            text : 'Salir'
+                            on_press: root.changeMain(), root.clear_saved()
+                           
+                            
+            AccordionItem:
+                title: 'Intervalo de Captura'
+                BoxLayout:
+                    orientation : 'vertical'
+                    size: root.width, root.height
+                    Label:
+                        text: 'Indica la frecuencia entre intervalos de captura en MINUTOS'
+                        font_size: 20
+                        color: 0,0,0,1
+                    BoxLayout:
+                        orientation : 'horizontal'
+                        size: root.width , root.height
+                        Slider:
+                            min: 0
+                            max: 30
+                            step: 1
+                            orientation: "horizontal"
+                            value_track : True
+                            value_track_color : 1,0,0,1
+                            on_value: root.slide_intCaptur(*args)
+                            id: slider_2
+                        Label:
+                            text: 'Valor'
+                            id: slider_intCaptur
+                            font_size : 25
+                            color : 0,0,0,1
+                            
+                    FloatLayout:                        
+                        Button:
+                            size_hint : None, None
+                            size : 85, 40
+                            pos: 170 , 75
+                            text : 'Grabar'
+                            bold : True
+                            on_press: root.save_totalInter()
+                        Button:
+                            size_hint : None, None
+                            size : 85,40
+                            pos : 560, 80
+                            text : 'Salir'
+                            on_press: root.changeMain(), root.clear_saved()
+            AccordionItem:
+                title: 'Duración de Programa'
+                BoxLayout:
+                    orientation : 'vertical'
+                    size: root.width, root.height
+                    Label:
+                        text: 'Indica la duración TOTAL del programa en MINUTOS'
+                        font_size: 20
+                        color: 0,0,0,1
+                    BoxLayout:
+                        orientation : 'horizontal'
+                        size: root.width , root.height
+                        Slider:
+                            min: 0
+                            max: 120
+                            step: 10
+                            orientation: "horizontal"
+                            value_track : True
+                            value_track_color : 1,0,0,1
+                            on_value: root.slide_program(*args)
+                            id: slider_1
+                        Label:
+                            text: 'Valor'
+                            id: slider_program
+                            font_size : 25
+                            color : 0,0,0,1
+                    FloatLayout:                        
+                        Button:
+                            size_hint : None, None
+                            size : 85, 40
+                            pos: 170 , 35
+                            text : 'Grabar'
+                            bold : True
+                            on_press:root.save_totalProgram()
+                        Button:
+                            size_hint : None, None
+                            size : 85,40
+                            pos : 560, 40
+                            text : 'Salir'
+                            on_press: root.changeMain(), root.clear_saved()
+<main_layout>
+    BoxLayout:
+        orientation: 'horizontal'
+        size: root.width, root.height
+        spacing: 30
+        padding: 30
+        Button:
+            text: "Previsualizar"
+            font_size: 18
+            bold: True            
+            on_press: root.startUse(),root.changePrev()
+            background_normal: ''
+            background_color: (132/255,50/255,199/255,0.6)
+            
+        Button:
+            text: " Programar"
+            font_size: 18
+            bold: True            
+            on_press: root.changeProgram()
+            background_normal: ''
+            background_color: (132/255,50/255,199/255,0.6)            
+        Button:
+            text: "Transferir"
+            font_size: 18
+            bold: True            
+            on_press: app.setBehavior.changeToTransfer()
+            background_normal: ''
+            background_color: (132/255,50/255,199/255,0.6)            
+        Button:
+            text: "SALIR"
+            font_size: 18
+            bold: True            
+            on_press: app.setBehavior.changeToExit()
+            background_normal: ''
+            background_color: (204/255,5/255,31/255,0.8)            
+        
+        
+<trans_layout>
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width , root.height
+        FloatLayout:
+            size:root.width, root.height
+            Button:
+                size_hint: None, None
+                size:350,50
+                text: "Transferir Todo"
+                pos: 235, 360
+                font_size: 18
+                bold: True            
+                on_press: app.setBehavior.transferAll()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                text: " Transferir solo Programa"
+                pos : 235, 280
+                font_size: 18
+                bold: True            
+                on_press: app.setBehavior.programToUsb()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                pos: 235, 200
+                text: "Transferir solo Manual"
+                font_size: 18
+                bold: True            
+                on_press: app.setBehavior.manualToUsb()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                pos: 235, 120                
+                text: "Elimiar Archivos Locales"
+                font_size: 18
+                bold: True            
+                on_press: Factory.transPopup().open(), app.setBehavior.clearFiles()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                pos: 235, 40                
+                text: "Salir"
+                font_size: 18
+                bold: True            
+                on_press: app.setBehavior.changeToMain()
+                background_normal: ''
+                background_color: (204/255,5/255,31/255,0.8)                 
+            
+    
+<exit_layout>
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width , root.height
+        FloatLayout:
+            size:root.width, root.height
+            Button:
+                size_hint: None, None
+                size:350,50
+                text: "Apagar Sistema"
+                pos: 235, 330
+                font_size: 18
+                bold: True            
+                on_press: Factory.confirm_shutdown().open()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                text: "Reiniciar Sistema"
+                pos : 235, 200
+                font_size: 18
+                bold: True            
+                on_press: Factory.confirm_reboot().open()
+                background_normal: ''
+                background_color: (132/255,50/255,199/255,0.6)
+            Button:
+                size_hint: None, None
+                size: 350,50
+                pos: 235, 70
+                text: "Regresar"
+                font_size: 18
+                bold: True            
+                on_press: app.setBehavior.changeToMain()
+                background_normal: ''
+                background_color: (204/255,5/255,31/255,0.8)                
+                
+<prev_layout>
+    
+    GridLayout:
+        cols:2
+        size: root.width, root.height        
+        GridLayout:
+            cols:1
+            size_hint: .25 , 1
+            #size:250,425
+            FloatLayout:            
+                Button:
+                    text: "Tomar Foto"
+                    font_size: 18
+                    bold: True
+                    size_hint: None,None
+                    size: 130,140                    
+                    pos: 23,250
+                    on_press: root.saveImgVid()
+                    background_color: (0,0,0,0)
+                    background_normal: ''
+                    canvas.before:
+                        Color:
+                            rgba: (160/224,232/255,120/255,1)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [180]                  
+                
+                    
+                backButton:
+                    text: "Regresar"
+                    font_size: 18
+                    bold: True 
+                    size_hint:None,None
+                    size: 120,50
+                    pos: 28,50
+                    on_press: root.changeToMain(), root.stopUse()
+                
+                
+        Image:
+            id: feedImg
+            
+<splash_layout>
+    FloatLayout:
+        size: root.width, root.height
+        Image:            
+            source: '/home/pi/Downloads/logo.jpg'
+        initButton:
+            text: "Iniciar"
+            on_press: root.changeMain()
+            font_size: 18
+            bold: True
+            size_hint: None, None
+            size: 120,40
+            pos_hint: {'center_x':0.5,'center_y':0.25}
+            
+            
+<initButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (132/255,50/255,199/255,0.6)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [22]
+            
+<backButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (204/255,5/255,31/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [22]                
+
